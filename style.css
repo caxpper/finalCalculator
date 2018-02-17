@@ -10,7 +10,7 @@ header{
 }
 
 .calculator{
-    padding: 1.5vh 0.5vw;
+    padding: 0.5vh 0.5vw 1.5vh 0.5vw;
     width: 25vw;
     height: 35vw;
     margin: 3% auto 0 auto;
@@ -23,6 +23,14 @@ header{
         width: 85vw;
         height: 100vw;
     }
+}
+
+.main{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .display{
@@ -41,8 +49,8 @@ header{
 
 .left_side{
     display: inline-block;
-    width: 74%;
-    height: 83%;
+    width: 73%;
+    height: 82%;
     margin: 1% 1% 1% 0;
 }
 
@@ -67,7 +75,7 @@ header{
     display: inline-block;
     vertical-align: top;
     width: 25%;
-    height: 81%;
+    height: 79%;
     margin: 2% 0;
 }
 
@@ -84,12 +92,12 @@ header{
 }
 
 .operators button:nth-child(1){
-    height: 17.215%;
-    margin: 5% 1%;
+    height: 17.8%;
+    margin: 4% 1% 6% 1%;
 }
 
 .operators button:nth-child(4){
-    height: 37.193%;
+    height: 37.3%;
     margin: 3% 1% 0 1%;
 }
 
@@ -105,4 +113,68 @@ header{
     font-size: 3vw;
     font-weight: bolder;
     border: 0;
+}
+
+.extra{
+    text-align: right;
+}
+
+.extend{
+    text-decoration:none;
+    color: #00a8e2;
+    font-size: 1vw;
+}
+
+.extraButtons{
+    display: inline-block;
+    width: 20%;
+    height: 79%;
+    margin: 2% 0;
+    vertical-align: top;
+}
+
+.extraButtons > button{
+    width: 95%;
+    height: 17.8%;
+    margin: 3% 1% 7.5% 2%;
+    font-size: 3vw;
+    font-weight: bolder;
+    border: 0;
+}
+
+.operators_extend{
+    width: 20%;
+}
+
+.left_side_extend{
+    width: 58%;
+}
+
+.calculator_extend{
+    width: 30vw;
+}
+
+.history{
+    overflow: auto;
+    display: inline-block;
+    width: 40%;
+    height: 96%;
+    margin: 1% 0 2% 0;
+    vertical-align: top;
+    background-color: lightgrey;
+    font-size: 2vw;
+    text-align: right;
+}
+
+.calculator_history{
+    width: 50vw;
+}
+
+.main_history{
+    width: 58%;
+    margin-left: 2%;
+}
+
+.hidden{
+    display: none;
 }
