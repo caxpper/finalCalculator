@@ -25,7 +25,7 @@ function Calculator(callback){
             this.deleteItems();
         }
         if (buttonVal === '(') { //open parenthesis
-            if (lastElemIsNaN) {
+            if (lastElemIsNaN && this.array[this.array.length - 1] !== ')') {
                 this.parenthesis++;
                 this.array.push(buttonVal);
                 this.cb("addItem", this.array[this.array.length - 1]);
@@ -364,7 +364,12 @@ function Calculator(callback){
     this.completeParenthesis = function(array){
 
         if(isNaN(array[array.length-1]) && array[array.length-1]!==')' && this.checkSpecialOperator(array[array.length-1])===-1){
-            this.history.push(array[array.length-2]);
+            if(array[array.length-1]==='('){
+                array.push(0);
+                this.history.push(0);
+            }else{
+                this.history.push(array[array.length-2]);
+            }
         }
         for(var x = 0; x < this.parenthesis;x++)  {
             array.push(')');
