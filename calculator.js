@@ -8,7 +8,6 @@ function Calculator(callback){
     this.array = [];
     this.history = [];
     this.finalHistory = [];
-    this.afterFirstIteration = [];
     this.parenthesisArray = [];
     this.parenthesis = 0;
     this.specialOperator = false;
@@ -126,7 +125,7 @@ function Calculator(callback){
      *                   2: execute everything
      * @returns {*} the result of the equation
      */
-    this.calculateTotal = function(iteration) {
+    this.calculateTotal = function(iteration,afterFirstIteration) {
 
         var num = null;
         if (this.array.length === 2) {//only 2 elements
@@ -160,7 +159,8 @@ function Calculator(callback){
                 this.history = this.array.slice(); //we copy our array of element to the history
                 this.completeParenthesis(this.array); //we complete the parenthesis the user didn't close
                 this.executeSpecialOperators(this.array); //before the normal calculation we calculate the special operations
-                num = this.processArray(iteration,this.array,history); //process the array of elements
+                num = this.processArray(iteration,this.array); //process the array of elements
+                num = num.toFixed(10);
                 this.history.push('=');
                 this.history.push(num);
                 this.finalHistory.push(this.history); //array of array for the history
@@ -168,8 +168,7 @@ function Calculator(callback){
                 this.cb("result",num);
                 this.array = [num];
             }else{//iteration 2
-                num = this.processArray(iteration,this.afterFirstIteration);
-                this.afterFirstIteration = [];
+                num = this.processArray(iteration,afterFirstIteration);
             }
         }
 
@@ -187,6 +186,7 @@ function Calculator(callback){
         var operator = null;
         var parenthesis = 0;
         var localParenthesisArray = [];
+        var afterFirstIteration = [];
 
         for (var i = 0; i < array.length; i++) {
             if(i===array.length-1-parenthesis && isNaN(array[i]) && array[i]!==')') {
@@ -194,15 +194,16 @@ function Calculator(callback){
                 if (iteration === 1) {
                     if (firstIterationOperators.indexOf(array[i]) !== -1) {//mult or div
                         num = this.executeOperator(num, num, array[i]);
-                        this.afterFirstIteration.push(num);
+                        afterFirstIteration.push(num);
                     } else {
                         if(parenthesis>0){//check we have open parenthesis
                             localParenthesisArray.push(array[i]);
                         }else {
-                            this.afterFirstIteration.push(array[i]);
+                            afterFirstIteration.push(array[i]);
                         }
                     }
                 } else {
+                    this.history.push(num);
                     num = this.executeOperator(num, num, array[i]);
                 }
             }else if (isNaN(array[i])){//operator
@@ -229,11 +230,11 @@ function Calculator(callback){
                             localParenthesisArray = [];
                             if(num!==error) {
                                 //we include the result to the array for the second iteration
-                                this.afterFirstIteration.push(num);
+                                afterFirstIteration.push(num);
                                 num = null;
                             }
                         }else{
-                            this.afterFirstIteration.push(this.processArray(2, localParenthesisArray));
+                            afterFirstIteration.push(this.processArray(1, localParenthesisArray));
                             localParenthesisArray = [];
                         }
                     }
@@ -242,10 +243,10 @@ function Calculator(callback){
                 }else if(iteration===1) {
                     //if we have a * or / we extract the first number from the array
                     if(firstIterationOperators.indexOf(array[i])!==-1) {
-                        num = this.afterFirstIteration.pop();
+                        num = afterFirstIteration.pop();
                         operator = array[i];
                     }else{
-                        this.afterFirstIteration.push(array[i]);
+                        afterFirstIteration.push(array[i]);
                     }
                 }else{
                     operator = array[i];
@@ -257,7 +258,7 @@ function Calculator(callback){
                     }else if(iteration===1) {
                         //if it's the first iteration we save the number for the second iteration
                         //or until we find a * or /
-                        this.afterFirstIteration.push(array[i]);
+                        afterFirstIteration.push(array[i]);
                     }else{
                         num = parseFloat(array[i]);
                     }
@@ -269,12 +270,12 @@ function Calculator(callback){
                             //if we find * or /
                             num = this.executeOperator(num, parseFloat(array[i]), operator);
                             if(num!==error) {
-                                this.afterFirstIteration.push(num);
+                                afterFirstIteration.push(num);
                                 num = null;
                             }
                         }else{
                             //if it's the first iteration we save the number for the second iteration
-                            this.afterFirstIteration.push(array[i]);
+                            afterFirstIteration.push(array[i]);
                         }
                     }else{
                         //in the second iteration we calculate any operation
@@ -285,7 +286,7 @@ function Calculator(callback){
         }
         if(iteration===1&&num!== error) {
             //call the second iteration
-            num = this.calculateTotal(2);
+            num = this.calculateTotal(2,afterFirstIteration);
         }
         return num;
     }
@@ -363,12 +364,13 @@ function Calculator(callback){
      */
     this.completeParenthesis = function(array){
 
-        if(isNaN(array[array.length-1]) && array[array.length-1]!==')' && this.checkSpecialOperator(array[array.length-1])===-1){
+        if(isNaN(array[array.length-1]) && array[array.length-1]!==')' && this.checkSpecialOperator(array[array.length-1])===-1 && this.parenthesis > 0){
             if(array[array.length-1]==='('){
                 array.push(0);
                 this.history.push(0);
             }else{
                 this.history.push(array[array.length-2]);
+                array.push(array[array.length-2]);
             }
         }
         for(var x = 0; x < this.parenthesis;x++)  {
