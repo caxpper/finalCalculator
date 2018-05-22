@@ -18,6 +18,7 @@ function Calculator(callback){
      * @param buttonVal
      */
     this.addItem = function(buttonVal) {
+        
         var lastElemIsNaN = isNaN(this.array[this.array.length - 1]);
 
         if (this.array[this.array.length - 1] === error) {
@@ -53,33 +54,40 @@ function Calculator(callback){
                 this.array[this.array.length - 1] = buttonVal + '('+this.array[this.array.length - 1]+')';
                 this.cb("special", this.array.join(""));
             }
-        }else if(buttonVal === '.' && !lastElemIsNaN) { //decimals
-            if(this.history.length > 0){//first key pressed
-                this.history = [];
-                this.array = [];
-                this.array.push('0.'); //we add the 0
-                this.cb("special", this.array.join(""));
-            }else {//after a number
-                var num_aux = parseInt(this.array[this.array.length - 1]);
-                num_aux += buttonVal; //we go the number and add the dot
-                this.array[this.array.length - 1] = num_aux; //sustitute the old number
-                this.cb("special", this.array.join(""));
+        }else if(buttonVal === '.'){// && !lastElemIsNaN) { //decimals
+            if(this.countCharactersOnCurrentDisplay(this.array) <= 10){
+                if(this.history.length > 0){//first key pressed
+                    this.history = [];
+                    this.array = [];
+                    this.array.push('0.'); //we add the 0
+                    this.cb("special", this.array[this.array.length - 1]);
+                }else if(lastElemIsNaN){                                        
+                    this.array.push('0.'); //we add the 0
+                    this.cb("special", this.array[this.array.length - 1]);
+                }else {//after a number
+                    var num_aux = parseInt(this.array[this.array.length - 1]);
+                    num_aux += buttonVal; //we go the number and add the dot
+                    this.array[this.array.length - 1] = num_aux; //sustitute the old number
+                    this.cb("special", this.array[this.array.length - 1]);
+                }
             }
         }else if(!isNaN(buttonVal) && !lastElemIsNaN){ //2 or more numbers
-            if(this.history.length > 0){ //we check if we did an operation before
-                this.history = [];//we reset everything
-                this.array = [];
-                this.array.push(buttonVal);
-                this.cb("special", this.array.join(""));
-            }else {
-                this.array[this.array.length - 1] += buttonVal;
-                this.cb("special", this.array.join(""));
+            if(this.countCharactersOnCurrentDisplay(this.array) <= 10){
+                if(this.history.length > 0){ //we check if we did an operation before
+                    this.history = [];//we reset everything
+                    this.array = [];
+                    this.array.push(buttonVal);
+                    this.cb("special", this.array[this.array.length - 1]);
+                }else {
+                    this.array[this.array.length - 1] += buttonVal;
+                    this.cb("special", this.array[this.array.length - 1]);
+                }
             }
         }else if(isNaN(buttonVal) && (!lastElemIsNaN || this.specialOperator)){//operator after number
             this.history = [];
             this.specialOperator = false;
             this.array.push(buttonVal); //add the operator
-            this.cb("addItem",this.array[this.array.length-1]);
+            this.cb("operator",this.array[this.array.length-1]);
         }else if(isNaN(buttonVal) && lastElemIsNaN){//operator after operator
             //Control that the operator is not a parenthesis
             if(this.array[this.array.length-1]!=='(' && this.array[this.array.length-1]!==')') {
@@ -95,7 +103,20 @@ function Calculator(callback){
             this.array.push(buttonVal);
             this.cb("addItem", this.array[this.array.length - 1]);
         }
+        
 
+    }
+
+    this.countCharactersOnCurrentDisplay = function(array){
+        let sum = 0;
+        if(array.length > 0){
+            if(typeof(array[array.length-1])==='string'){
+                sum += array[array.length-1].length;
+            }else{
+                sum += array[array.length-1].toString().length;
+            } 
+        }       
+        return sum;
     }
 
     /**
@@ -160,7 +181,8 @@ function Calculator(callback){
                 this.completeParenthesis(this.array); //we complete the parenthesis the user didn't close
                 this.executeSpecialOperators(this.array); //before the normal calculation we calculate the special operations
                 num = this.processArray(iteration,this.array); //process the array of elements
-                num = num.toFixed(10);
+                num = parseFloat(num.toFixed(4));
+                if(num.toString.length>3)
                 this.history.push('=');
                 this.history.push(num);
                 this.finalHistory.push(this.history); //array of array for the history

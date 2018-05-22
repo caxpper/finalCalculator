@@ -31,6 +31,21 @@
     border-radius: 10px;
 }
 
+.previous{
+    font-size: .4em;
+    height: 35%;
+    margin: 0 ;
+    padding-top: 5px;
+    overflow-y: hidden;
+}
+
+.current{
+    font-size: .8em;
+    height: 55%;
+    margin: 0;
+    padding-bottom: 5px;
+}
+
 .left_side{
     display: inline-block;
     width: 73%;
