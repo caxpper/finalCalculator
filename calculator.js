@@ -182,7 +182,9 @@ function Calculator(callback){
                 this.executeSpecialOperators(this.array); //before the normal calculation we calculate the special operations
                 num = this.processArray(iteration,this.array); //process the array of elements
                 num = parseFloat(num.toFixed(4));
-                if(num.toString.length>3)
+                if(num.toString().length > 13){
+                    num = num.toExponential();
+                }
                 this.history.push('=');
                 this.history.push(num);
                 this.finalHistory.push(this.history); //array of array for the history
