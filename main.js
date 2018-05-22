@@ -3,24 +3,33 @@ var extra_flag = false;
 var history_flag = false;
 
 function callback(type,value) {
-    var displayText = $('.display').text();
+    var currentText = $('.current').text();
+    var previousText = $('.previous').text();
 
     switch (type) {
         case "delete":
-            $('.display').text("");
+            $('.previous').text("");
+            $('.current').text("");
             break;
         case "special":
-            $('.display').text(value);
+            $('.current').text(value);
             break;
         case "result":
-            $('.display').text(value);
+            $('.previous').text("");
+            $('.current').text(value);
+            break;
+        case "operator":
+            newText = previousText + " " + currentText + " " + value;
+            $('.previous').text(newText);
+            $('.current').text("");
             break;
         case "addItem":
-            displayText += value;
-            $('.display').text(displayText);
+            currentText += value;
+            $('.current').text(currentText);
             break;
         default:
-            $('.display').text("");
+            $('.previous').text("");
+            $('.current').text("");
     }
 }
 
