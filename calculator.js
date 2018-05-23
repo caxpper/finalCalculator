@@ -361,7 +361,7 @@ function Calculator(callback){
     this.printHistory = function () {
         this.historyElement.empty();
         for(var i = 0; i < this.finalHistory.length; i++){
-            var $div = $('<div>').text(this.finalHistory[i].join(''));
+            var $div = $('<div>').text(this.finalHistory[i].join(' '));
             $div.addClass('history_element');
             this.historyElement.append($div);
             $div[0].scrollIntoView();

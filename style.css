@@ -5,8 +5,8 @@ html{
 .calculator{
     padding: 0.5vh 0.5vw 1.5vh 0.5vw;
     width: 416px;
-    height: 624px;
-    margin: 3% auto 0 auto;
+    height: 600px;
+    margin: 1% auto 0 auto;
     background-color: #303a42;
     font-size: 0;
     border-radius: 10px;
@@ -180,7 +180,7 @@ button:focus{
 }
 
 .calculator_extend{
-    width: 38vw;
+    width: 575px;
 }
 
 .history{
@@ -206,11 +206,11 @@ button:focus{
 }
 
 .calculator_history{
-    width: 39.6vw;
+    width: 660px;
 }
 
 .calculator_history_extend{
-    width: 60vw;
+    width: 990px;
 }
 
 .main_history{
@@ -260,18 +260,86 @@ button:active{
     background-color: gold;
 }
 
-@media screen and (max-device-width: 500px) {
+@media screen and (max-device-width: 1024px) {
+
+    html{
+        font-size: 60px;
+    }
+
     .calculator{
-        width: 95vw;
+        width: 90vw;
         height: 90vh;
         margin-top: 5vh;
     }
 
-    .calculator_extend{
-        width: 85vw;
+}
+
+@media screen and (max-device-width: 1366px) and (orientation: landscape) {
+    
+    html{
+        font-size: 60px;
     }
 
-    .calculator_history{
-        width: 95vw;
+    .calculator{
+        width: 90vw;
+        height: 90vh;
+        margin-top: 5vh;
+    }
+
+    .hidden{
+        display: inline-block;
+    }
+
+    .history{
+        display:none;
+    }
+
+    .left_side {
+        height: 76%;
+        width: 48%;
+    }
+
+    .operators {
+        height: 74%;
+        width: 16.66%;
+    }
+
+    .extraButtons {
+        height: 72%;
+    }
+}
+
+@media screen and (max-device-height: 415px) and (orientation: landscape) {
+    html{
+        font-size: 30px;
+    }
+
+    .calculator{
+        width: 68vw;
+        height: 95vh;
+        margin-top: 0;
+    }
+
+    .display{
+        height: 20%;
+    }
+
+    .left_side {
+        height: 71%;
+    }
+
+    .operators {
+        height: 69%;
+    }
+
+    .extraButtons {
+        height: 67%;
+    }
+}
+
+@media screen and (min-device-width: 739px) and (max-device-height: 411px) and (orientation: landscape) {
+
+    .calculator{
+        width: 53vw;
     }
 }
