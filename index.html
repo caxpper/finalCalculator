@@ -6,12 +6,14 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="calculator.js"> </script>
+    <script src="test.js"> </script>
     <script src="main.js"> </script>
 </head>
 <body>
     <div class="calculator">
         <div class="extra">
             <a href="#" class="history_extend">&#9668 History</a>
+            <a href="#" id="test" class="test">Test</a>
             <a href="#" class="extra_extend">&#9658</a>
         </div>
         <div class="history hidden"></div>
@@ -22,41 +24,41 @@
             </div>
             <div class="left_side">
                 <div class="clear">
-                    <button>C</button>
-                    <button>CE</button>
+                    <button class="clearButton">C</button>
+                    <button class="clearButton">CE</button>
                 </div>
                 <div class="number">
-                   <button>7</button>
-                   <button>8</button>
-                   <button>9</button>
-                   <button>4</button>
-                   <button>5</button>
-                   <button>6</button>
-                   <button>1</button>
-                   <button>2</button>
-                   <button>3</button>
-                   <button>0</button>
-                   <button>.</button>
-                   <button>=</button>
+                   <button id='7'>7</button>
+                   <button id='8'>8</button>
+                   <button id='9'>9</button>
+                   <button id='4'>4</button>
+                   <button id='5'>5</button>
+                   <button id='6'>6</button>
+                   <button id='1'>1</button>
+                   <button id='2'>2</button>
+                   <button id='3'>3</button>
+                   <button id='0'>0</button>
+                   <button id='dec'>.</button>
+                   <button id='eq'>=</button>
                 </div>
             </div>
             <div class="operators">
-                <button>/</button>
-                <button>x</button>
-                <button>-</button>
-                <button>+</button>
+                <button class="operatorButton" id='div'>/</button>
+                <button class="operatorButton" id='mul'>x</button>
+                <button class="operatorButton" id='sub'>-</button>
+                <button class="operatorButton" id='add'>+</button>
             </div>
             <div class="extraButtons hidden">
-                <button>±</button>
-                <button>n!</button>
-                <button>√</button>
-                <button>sin</button>
-                <button>log</button>
-                <button>cos</button>
-                <button>(</button>
-                <button>tan</button>
-                <button>)</button>
-                <button>^</button>
+                <button class="extraButton" id='neg'>±</button>
+                <button class="extraButton" id='fac'>n!</button>
+                <button class="extraButton" id='sqr'>√</button>
+                <button class="extraButton" id='sin'>sin</button>
+                <button class="extraButton" id='log'>log</button>
+                <button class="extraButton" id='cos'>cos</button>
+                <button class="extraButton" id='op'>(</button>
+                <button class="extraButton" id='tan'>tan</button>
+                <button class="extraButton" id='cp'>)</button>
+                <button class="extraButton" id='exp'>^</button>
             </div>
         </div>
     </div>

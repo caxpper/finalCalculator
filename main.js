@@ -1,6 +1,34 @@
 $(document).ready(initApp);
 var extra_flag = false;
 var history_flag = false;
+const symbolTranslator = {
+    1:'1',
+    2:'2',
+    3:'3',
+    4:'4',
+    5:'5',
+    6:'6',
+    7:'7',
+    8:'8',
+    9:'9',
+    0:'0',
+    '.':'dec',
+    '=':'eq',
+    '/':'div',
+    'x':'mul',
+    '-':'sub',
+    '+':'add',
+    '±':'neg',
+    'n!':'fac',
+    '√':'sqr',
+    'sin':'sin',
+    'log':'log',
+    'cos':'cos',
+    '(':'op',
+    'tan':'tan',
+    ')':'cp',
+    '^':'exp',
+}
 
 function callback(type,value) {
     var currentText = $('.current').text();
@@ -44,11 +72,16 @@ function attachedHandlers() {
     $('button').on('click',buttonHandler);
     $('.extra_extend').on('click',extendPanel);
     $('.history_extend').on('click',extendHistory);
+    $('#test').on('click',()=>test(testList,0));
 }
 
 function buttonHandler() {
     var val = $(this).text();
     var result = val;
+    processItem(val);
+}
+
+function processItem(val){
     switch (val) {
         case 'CE':
             my_calculator.deleteLastNumber();
@@ -63,6 +96,30 @@ function buttonHandler() {
             my_calculator.addItem(val);
             break;
     }
+}
+
+function test(caculationList,indexCalculation){
+    processOneCalculation(caculationList,indexCalculation,0);
+}
+
+function processOneCalculation(caculationList,indexCalculation,index){
+    setTimeout(()=>{
+        let element = $('#'+symbolTranslator[caculationList[indexCalculation][index]]);
+        element.addClass('active');
+        setTimeout(()=>{
+            element.removeClass('active');
+        },150);
+        processItem(caculationList[indexCalculation][index]); 
+        index++;
+        if(index < caculationList[indexCalculation].length){
+            processOneCalculation(caculationList,indexCalculation,index);
+        }else{
+            indexCalculation++;
+            if(indexCalculation < caculationList.length){
+                test(caculationList,indexCalculation);
+            }
+        }
+    },500);
 }
 
 function extendPanel() {

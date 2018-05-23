@@ -1,8 +1,11 @@
+html{
+    font-size: 30px;
+}
 
 .calculator{
     padding: 0.5vh 0.5vw 1.5vh 0.5vw;
-    width: 25vw;
-    height: 35vw;
+    width: 416px;
+    height: 624px;
     margin: 3% auto 0 auto;
     background-color: #303a42;
     font-size: 0;
@@ -22,7 +25,7 @@
     height: 15%;
     margin: 1% 1%;
     background-color: #00a8e2;
-    font-size: 3.5vw;
+    font-size: 1rem;
     font-weight: bold;
     color: #303a42;
     text-align: right;
@@ -32,7 +35,7 @@
 }
 
 .previous{
-    font-size: .4em;
+    font-size: .8em;
     height: 35%;
     margin: 0 ;
     padding-top: 5px;
@@ -40,10 +43,19 @@
 }
 
 .current{
-    font-size: .8em;
+    font-size: 1.6em;
     height: 55%;
     margin: 0;
     padding-bottom: 5px;
+}
+
+button{
+    box-shadow: 0 5px #999;
+    cursor: pointer;
+}
+
+button:focus{
+    outline: none;
 }
 
 .left_side{
@@ -59,17 +71,23 @@
     margin: 1.5% 0 2% 0;
 }
 
-.clear > button{
+.clearButton{
     width: 48%;
     height: 93.35%;
     margin: 2% 1% 5% 1%;
-    font-size: 3vw;
+    font-size: 1rem;
     font-weight: bolder;
     background-color: #005b7f;
     color: #00a8e2;
     border: 0;
     border-radius: 10px;
+    box-shadow: 0 5px #0178a7;
 }
+
+/* .clear > button:active{
+    box-shadow: 0 3px #006086;
+    transform: translateY(4px);
+} */
 
 .operators{
     display: inline-block;
@@ -79,18 +97,23 @@
     margin: 1.9% 0;
 }
 
-.operators > button{
+.operatorButton{
     width: 95%;
     height: 17.5%;
     margin: 5.5% 1% 5.9% 1%;
-    font-size: 2vw;
+    font-size: 1rem;
     font-weight: bolder;
     background-color: dodgerblue;
     color: #303a42;
     border: 0;
     border-radius: 10px;
-
+    box-shadow: 0 5px #0165c5;
 }
+
+/* .operators > button:active{
+    box-shadow: 0 3px #014d96;
+    transform: translateY(4px);
+} */
 
 .operators button:nth-child(4){
     height: 37.2%;
@@ -106,7 +129,7 @@
     width: 31.3%;
     height: 21%;
     margin: 2% 1%;
-    font-size: 3vw;
+    font-size: 1rem;
     font-weight: bolder;
     border: 0;
     border-radius: 10px;
@@ -119,7 +142,7 @@
 .extra_extend{
     text-decoration:none;
     color: #00a8e2;
-    font-size: 1vw;
+    font-size: .5rem;
 }
 
 .extraButtons{
@@ -130,17 +153,23 @@
     vertical-align: top;
 }
 
-.extraButtons > button{
+.extraButton{
     width: 45%;
     height: 17.5%;
     margin: 1.5% 2% 4.3% 3%;
-    font-size: 2vw;
+    font-size: 1rem;
     font-weight: bolder;
     background-color: firebrick;
     color: #00a8e2;
     border: 0;
     border-radius: 10px;
+    box-shadow: 0 5px #960c0c;
 }
+
+/* .extraButtons > button:active{
+    box-shadow: 0 3px #670808;
+    transform: translateY(4px);
+} */
 
 .operators_extend{
     width: 16.66%;
@@ -161,7 +190,7 @@
     height: 96%;
     margin: 1% 0 2% 0;
     vertical-align: top;
-    font-size: 2vw;
+    font-size: .7rem;
     text-align: right;
     border-radius: 10px;
     background-color: whitesmoke;
@@ -169,6 +198,11 @@
 
 .history_element{
     word-wrap: break-word;
+    padding: 2% 3% 2% 0;
+}
+
+.history_element:nth-child(odd) {
+    background: lightgrey;
 }
 
 .calculator_history{
@@ -201,17 +235,36 @@
     float: left;
     text-decoration:none;
     color: #00a8e2;
-    font-size: 1vw;
+    font-size: .5rem;
+}
+
+.test{
+    float: left;
+    text-decoration:none;
+    color: #00a8e2;
+    font-size: .5rem;
 }
 
 .display_extend{
     height: 16%;
 }
 
+button:active{
+    box-shadow: 0 3px #313f4a;
+    transform: translateY(4px);
+}
+
+.active{
+    box-shadow: 0 3px #313f4a;
+    transform: translateY(4px);
+    background-color: gold;
+}
+
 @media screen and (max-device-width: 500px) {
     .calculator{
-        width: 75vw;
-        height: 100vw;
+        width: 95vw;
+        height: 90vh;
+        margin-top: 5vh;
     }
 
     .calculator_extend{

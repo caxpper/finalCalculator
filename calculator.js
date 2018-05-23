@@ -181,9 +181,11 @@ function Calculator(callback){
                 this.completeParenthesis(this.array); //we complete the parenthesis the user didn't close
                 this.executeSpecialOperators(this.array); //before the normal calculation we calculate the special operations
                 num = this.processArray(iteration,this.array); //process the array of elements
-                num = parseFloat(num.toFixed(4));
-                if(num.toString().length > 13){
-                    num = num.toExponential();
+                if(num!== error){
+                    num = parseFloat(num.toFixed(4));
+                    if(num.toString().length > 13){
+                        num = num.toExponential();
+                    }
                 }
                 this.history.push('=');
                 this.history.push(num);
@@ -362,6 +364,7 @@ function Calculator(callback){
             var $div = $('<div>').text(this.finalHistory[i].join(''));
             $div.addClass('history_element');
             this.historyElement.append($div);
+            $div[0].scrollIntoView();
         }
     }
 
