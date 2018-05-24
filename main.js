@@ -15,7 +15,7 @@ const symbolTranslator = {
     '.':'dec',
     '=':'eq',
     '/':'div',
-    'x':'mul',
+    '*':'mul',
     '-':'sub',
     '+':'add',
     '±':'neg',
@@ -29,6 +29,8 @@ const symbolTranslator = {
     ')':'cp',
     '^':'exp',
 }
+
+var testAvailable = true;
 
 function callback(type,value) {
     var currentText = $('.current').text();
@@ -70,9 +72,13 @@ function initApp(){
 
 function attachedHandlers() {
     $('button').on('click',buttonHandler);
-    $('.extra_extend').on('click',extendPanel);
-    $('.history_extend').on('click',extendHistory);
-    $('#test').on('click',()=>test(testList,0));
+    $('.view').on('click',extendMenu);
+    $('#standard').on('click',standardView);
+    $('#scientific').on('click',scientificView);
+    $('#history').on('click',()=>extendHistory(false));
+    $('#test').on('click',runTest);
+    $('.test').on('click',runTest);
+    $('.stop').on('click',stopTest);
 }
 
 function buttonHandler() {
@@ -98,31 +104,95 @@ function processItem(val){
     }
 }
 
+function stopTest(){
+    testAvailable = false
+    $('.view').removeClass('barSelect');
+    $('.menu').addClass('hide');
+    my_calculator.deleteItems();
+}
+
+function runTest(){
+    $('.view').removeClass('barSelect');
+    $('.menu').addClass('hide');
+    $('#test').unbind("click");   
+    $('.test').unbind("click");  
+    $('button').unbind("click");
+    $('.stop').removeClass('hide'); 
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile) {          
+        scientificView();
+        extendHistory(true);       
+    }
+    test(testList,0);
+}
+
 function test(caculationList,indexCalculation){
     processOneCalculation(caculationList,indexCalculation,0);
 }
 
 function processOneCalculation(caculationList,indexCalculation,index){
-    setTimeout(()=>{
-        let element = $('#'+symbolTranslator[caculationList[indexCalculation][index]]);
-        element.addClass('active');
+    if(testAvailable){
         setTimeout(()=>{
-            element.removeClass('active');
-        },150);
-        processItem(caculationList[indexCalculation][index]); 
-        index++;
-        if(index < caculationList[indexCalculation].length){
-            processOneCalculation(caculationList,indexCalculation,index);
-        }else{
-            indexCalculation++;
-            if(indexCalculation < caculationList.length){
-                test(caculationList,indexCalculation);
+            let element = $('#'+symbolTranslator[caculationList[indexCalculation][index]]);
+            element.addClass('active');
+            setTimeout(()=>{
+                element.removeClass('active');
+            },150);
+            processItem(caculationList[indexCalculation][index]); 
+            index++;
+            if(index < caculationList[indexCalculation].length){
+                processOneCalculation(caculationList,indexCalculation,index);
+            }else{
+                indexCalculation++;
+                if(indexCalculation < caculationList.length){
+                    test(caculationList,indexCalculation);
+                }else{
+                    $('#test').on('click',runTest); 
+                    $('.test').on('click',runTest); 
+                    $('.stop').addClass('hide');          
+                    $('button').on('click',buttonHandler);
+                }
             }
-        }
-    },500);
+        },500);
+    }else{
+        $('#test').on('click',runTest); 
+        $('.test').on('click',runTest); 
+        $('.stop').addClass('hide');              
+        $('.previous').text("");
+        $('.current').text("");       
+        $('button').on('click',buttonHandler);
+        testAvailable = true;
+    }
 }
 
-function extendPanel() {
+function extendMenu() {
+    $('.view').toggleClass('barSelect');
+    $('.menu').toggleClass('hide');
+}
+
+function scientificView(){
+    if(!extra_flag) {
+        extra_flag = true;
+        $('.operators').addClass("operators_extend");
+        $('.left_side').addClass("left_side_extend");
+        $('.calculator').addClass("calculator_extend");
+        $('.extraButtons').removeClass("hidden");
+        if (history_flag) {
+            $('.display').addClass('display_extend');
+            $('.calculator').addClass("calculator_history_extend");
+            $('.calculator').removeClass("calculator_extend");
+            $('.main').addClass("main_history_extend");
+        }
+    }
+           
+    $('.view').removeClass('barSelect');
+    $('.menu').addClass('hide');
+    $('#scientific').addClass('menuSelect');
+    $('#standard').removeClass('menuSelect');
+
+}
+
+function standardView() {
     if(extra_flag) {
         extra_flag = false;
         $('.operators').removeClass("operators_extend");
@@ -135,33 +205,22 @@ function extendPanel() {
             $('.main').addClass("main_history");
         }
         $('.extraButtons').addClass("hidden");
-        $('.extra_extend').text('►');
         $('.display').removeClass('display_extend');
-    }else {
-        extra_flag = true;
-        $('.operators').addClass("operators_extend");
-        $('.left_side').addClass("left_side_extend");
-        $('.calculator').addClass("calculator_extend");
-        $('.extraButtons').removeClass("hidden");
-        $('.extra_extend').text('◄');
-        if (history_flag) {
-            $('.display').addClass('display_extend');
-            $('.calculator').addClass("calculator_history_extend");
-            $('.calculator').removeClass("calculator_extend");
-            $('.main').addClass("main_history_extend");
-        }
     }
+    $('.view').removeClass('barSelect');
+    $('.menu').addClass('hide');
+    $('#standard').addClass('menuSelect');
+    $('#scientific').removeClass('menuSelect');
 }
 
 
-function extendHistory(){
+function extendHistory(fromTest){
     if(!history_flag){
         history_flag = true;
         $('.calculator').addClass("calculator_history");
         $('.calculator').removeClass("calculator_extend");
         $('.main').addClass("main_history");
         $('.history').removeClass("hidden");
-        $('.history_extend').text('►');
         if(extra_flag) {
             $('.display').addClass('display_extend');
             $('.main').removeClass("main_history");
@@ -169,20 +228,25 @@ function extendHistory(){
             $('.calculator').removeClass("calculator_history");
             $('.calculator').addClass("calculator_history_extend");
         }
-    }else{
-        history_flag = false;
-        $('.calculator').removeClass("calculator_history_extend");
-        $('.calculator').removeClass("calculator_history");
-        $('.main').removeClass("main_history");
-        $('.main').removeClass("main_history_extend");
-        if(extra_flag){
-            $('.calculator').addClass("calculator_extend");
-        }
-        $('.history').addClass("hidden");
-        $('.history_extend').text('◄ History');
-        $('.display').removeClass('display_extend');
-
+        $('#history').toggleClass('menuSelect');
     }
+    else{
+        if(!fromTest){
+            history_flag = false;
+            $('.calculator').removeClass("calculator_history_extend");
+            $('.calculator').removeClass("calculator_history");
+            $('.main').removeClass("main_history");
+            $('.main').removeClass("main_history_extend");
+            if(extra_flag){
+                $('.calculator').addClass("calculator_extend");
+            }
+            $('.history').addClass("hidden");
+            $('.display').removeClass('display_extend');
+            $('#history').toggleClass('menuSelect');
+        }
+    } 
+    $('.view').removeClass('barSelect');
+    $('.menu').addClass('hide');
 
 }
 
