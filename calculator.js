@@ -45,14 +45,14 @@ function Calculator(callback){
             if (!lastElemIsNaN) { //change sign
                 this.specialOperator = true; //we indicate exist a special operator to control when we resolve the equation
                 this.array[this.array.length - 1] = 'sqrt('+this.array[this.array.length - 1]+')';
-                this.cb("special", this.array.join(""));
+                this.cb("special", this.array[this.array.length - 1]);
             }
         }else if(buttonVal === 'log' || buttonVal === 'sin' || buttonVal === 'cos'
             || buttonVal === 'tan' || buttonVal === 'n!') {//special operators
             if (!lastElemIsNaN) {
                 this.specialOperator = true;
                 this.array[this.array.length - 1] = buttonVal + '('+this.array[this.array.length - 1]+')';
-                this.cb("special", this.array.join(""));
+                this.cb("special", this.array[this.array.length - 1]);
             }
         }else if(buttonVal === '.'){// && !lastElemIsNaN) { //decimals
             if(this.countCharactersOnCurrentDisplay(this.array) <= 10){
@@ -136,7 +136,7 @@ function Calculator(callback){
     this.deleteLastNumber = function(){
         if(!isNaN(this.array[this.array.length-1])) {
             this.array.pop();
-            this.cb("decimal", this.array.join(""));
+            this.cb("special", "");
         }
     }
 

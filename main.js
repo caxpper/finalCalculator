@@ -27,39 +27,67 @@ const symbolTranslator = {
     '(':'op',
     'tan':'tan',
     ')':'cp',
-    '^':'exp',
+    '^':'exp'
 }
+const keyTranslator = {
+    1:'1',
+    2:'2',
+    3:'3',
+    4:'4',
+    5:'5',
+    6:'6',
+    7:'7',
+    8:'8',
+    9:'9',
+    0:'0',
+    '.':'.',
+    '=':'=',
+    '/':'/',
+    '*':'*',
+    '-':'-',
+    '+':'+',
+    '!':'n!',
+    '@':'√',
+    's':'sin',
+    'l':'log',
+    'c':'cos',
+    '(':'(',
+    'tan':'tan',
+    ')':')',
+    'y':'^'
+}
+const validKeys = '1234567890.+=/*-!@slct()y';
 
 var testAvailable = true;
 
 function callback(type,value) {
-    var currentText = $('.current').text();
+    var currentText = $('.current').val();
     var previousText = $('.previous').text();
 
     switch (type) {
         case "delete":
             $('.previous').text("");
-            $('.current').text("");
+            $('.current').val("");
             break;
         case "special":
-            $('.current').text(value);
+            $('.current').val(value);
             break;
         case "result":
             $('.previous').text("");
-            $('.current').text(value);
+            $('.current').val(value);
             break;
         case "operator":
             newText = previousText + " " + currentText + " " + value;
             $('.previous').text(newText);
-            $('.current').text("");
+            $('.current').val("");
             break;
         case "addItem":
             currentText += value;
-            $('.current').text(currentText);
+            $('.current').val(currentText);
             break;
         default:
             $('.previous').text("");
-            $('.current').text("");
+            $('.current').val("");
     }
 }
 
@@ -79,12 +107,21 @@ function attachedHandlers() {
     $('#test').on('click',runTest);
     $('.test').on('click',runTest);
     $('.stop').on('click',stopTest);
+    $('.current').on('keypress',checkValidKey.bind(this));
 }
 
 function buttonHandler() {
     var val = $(this).text();
-    var result = val;
     processItem(val);
+}
+
+function checkValidKey(e) {
+    e.preventDefault();
+    var val = e.key;
+
+    if(validKeys.indexOf(val)!==-1){
+        processItem(keyTranslator[val]);
+    }
 }
 
 function processItem(val){
