@@ -11,10 +11,17 @@
 </head>
 <body>
     <div class="calculator">
+        <div class='menu hide'>
+            <div id='standard' class='option menuSelect'>Standard</div>
+            <div id='scientific' class='option'>Scientific</div>
+            <hr>
+            <div id='history' class='option'>History</div>
+            <div id='test' class='option'>Run test</div>
+        </div>
         <div class="extra">
-            <a href="#" class="history_extend">&#9668 History</a>
-            <a href="#" id="test" class="test">Test</a>
-            <a href="#" class="extra_extend">&#9658</a>
+            <a href="#" class="view">View</a>  
+            <a href="#" class="test">Run Test</a>
+            <a href="#" class="stop hide">Stop Test</a>
         </div>
         <div class="history hidden"></div>
         <div class="main">
@@ -44,7 +51,7 @@
             </div>
             <div class="operators">
                 <button class="operatorButton" id='div'>/</button>
-                <button class="operatorButton" id='mul'>x</button>
+                <button class="operatorButton" id='mul'>*</button>
                 <button class="operatorButton" id='sub'>-</button>
                 <button class="operatorButton" id='add'>+</button>
             </div>

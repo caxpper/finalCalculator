@@ -3,9 +3,10 @@ html{
 }
 
 .calculator{
-    padding: 0.5vh 0.5vw 1.5vh 0.5vw;
-    width: 416px;
-    height: 600px;
+    position: relative;
+    padding: 4px 7px 11px 12px;;
+    width: 400px;
+    height: 570px;
     margin: 1% auto 0 auto;
     background-color: #303a42;
     font-size: 0;
@@ -58,10 +59,52 @@ button:focus{
     outline: none;
 }
 
+.view, .test, .stop{
+    text-decoration:none;
+    color: #00a8e2;
+    font-size: .5rem;
+    padding: .5% 3%;
+    margin-top: 1%;
+}
+
+.view:hover, .test:hover, .stop:hover, .barSelect{
+    border: 1px solid #00a8e2;
+    border-radius: 5px;
+}
+
+.menu{
+    position: absolute;
+    top: 34px;
+    left: 12px;
+    width: 140px;
+    font-size: .5rem;
+    background-color: lightgrey;
+    padding: 2%;
+    border-radius: 5px;
+}
+
+.option{
+    padding: 10%;
+}
+
+.option:hover{
+    border: 1px solid #00a8e2;    
+    opacity: .6;
+    cursor: pointer;
+}
+
+.menuSelect:before{
+    content: '● ';
+}
+
+.hide{
+    display: none;
+}
+
 .left_side{
     display: inline-block;
     width: 73%;
-    height: 83%;
+    height: 81%;
     margin: 1% 1% 1% 0;
 }
 
@@ -84,16 +127,11 @@ button:focus{
     box-shadow: 0 5px #0178a7;
 }
 
-/* .clear > button:active{
-    box-shadow: 0 3px #006086;
-    transform: translateY(4px);
-} */
-
 .operators{
     display: inline-block;
     vertical-align: top;
     width: 25%;
-    height: 80%;
+    height: 78.5%;
     margin: 1.9% 0;
 }
 
@@ -109,11 +147,6 @@ button:focus{
     border-radius: 10px;
     box-shadow: 0 5px #0165c5;
 }
-
-/* .operators > button:active{
-    box-shadow: 0 3px #014d96;
-    transform: translateY(4px);
-} */
 
 .operators button:nth-child(4){
     height: 37.2%;
@@ -136,7 +169,8 @@ button:focus{
 }
 
 .extra{
-    text-align: right;
+    text-align: left;
+    padding: 1%;
 }
 
 .extra_extend{
@@ -148,7 +182,7 @@ button:focus{
 .extraButtons{
     display: inline-block;
     width: 34%;
-    height: 79%;
+    height: 75%;
     margin: 2.5% 0;
     vertical-align: top;
 }
@@ -173,10 +207,12 @@ button:focus{
 
 .operators_extend{
     width: 16.66%;
+    height: 76%;
 }
 
 .left_side_extend{
     width: 48%;
+    height: 79%;
 }
 
 .calculator_extend{
@@ -187,7 +223,7 @@ button:focus{
     overflow-y: auto;
     display: inline-block;
     width: 35%;
-    height: 96%;
+    height: 93%;
     margin: 1% 0 2% 0;
     vertical-align: top;
     font-size: .7rem;
@@ -210,12 +246,12 @@ button:focus{
 }
 
 .calculator_history_extend{
-    width: 990px;
+    width: 910px;
 }
 
 .main_history{
     width: 63%;
-    height: 99%;
+    height: 97%;
     margin: 0.5% 0;
     margin-left: 2%;
 }
@@ -238,12 +274,6 @@ button:focus{
     font-size: .5rem;
 }
 
-.test{
-    float: left;
-    text-decoration:none;
-    color: #00a8e2;
-    font-size: .5rem;
-}
 
 .display_extend{
     height: 16%;
@@ -260,6 +290,13 @@ button:active{
     background-color: gold;
 }
 
+@media screen and (min-width: 400px) {
+
+    .test{      
+        display: none;  
+    }
+}
+
 @media screen and (max-device-width: 1024px) {
 
     html{
@@ -272,40 +309,77 @@ button:active{
         margin-top: 5vh;
     }
 
-}
-
-@media screen and (max-device-width: 1366px) and (orientation: landscape) {
+    .main_history, .main_history_extend {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
     
-    html{
-        font-size: 60px;
+    .history {
+        display: none;
     }
 
-    .calculator{
-        width: 90vw;
-        height: 90vh;
-        margin-top: 5vh;
+    .extraButtons {
+        display: none;
+    }
+
+    .left_side_extend {
+        width: 73%;
+        height: 81%;
+    }
+
+    .operators_extend {
+        width: 25%;
+        height: 78.5%;
+    }
+
+    .test{      
+        display: inline;  
+    }
+
+    .view{
+        display: none;
+    }
+
+}
+
+@media screen and (max-device-width: 1024px) and (orientation: landscape) {
+    
+    html{
+        font-size: 35px;
+    }
+
+    .history {
+        display: inline-block;
+        height: 90%;
     }
 
     .hidden{
         display: inline-block;
     }
 
-    .history{
-        display:none;
+    .main {
+        display: inline-block;
+        width: 63%;
+        height: 97%;
+        margin: 0.5% 0;
+        margin-left: 2%;
     }
 
     .left_side {
-        height: 76%;
+        height: 80%;
         width: 48%;
     }
 
     .operators {
-        height: 74%;
+        height: 77%;
         width: 16.66%;
     }
 
-    .extraButtons {
-        height: 72%;
+    .extraButtons {        
+        display: inline-block;
+        height: 77%;
     }
 }
 
@@ -317,7 +391,11 @@ button:active{
     .calculator{
         width: 68vw;
         height: 95vh;
-        margin-top: 0;
+        margin: 1vh auto;
+    }
+
+    .history {
+        height: 93%;
     }
 
     .display{
@@ -325,15 +403,15 @@ button:active{
     }
 
     .left_side {
-        height: 71%;
+        height: 78%;
     }
 
     .operators {
-        height: 69%;
+        height: 75%;
     }
 
     .extraButtons {
-        height: 67%;
+        height: 75%;
     }
 }
 
