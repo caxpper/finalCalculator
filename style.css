@@ -2,6 +2,11 @@ html{
     font-size: 30px;
 }
 
+@font-face {
+    font-family: calculatorFont;
+    src: url(Calculator.ttf);
+}
+
 .calculator{
     position: relative;
     padding: 4px 7px 11px 12px;;
@@ -10,6 +15,7 @@ html{
     margin: 1% auto 0 auto;
     background-color: #303a42;
     font-size: 0;
+    font-family: calculatorFont;
     border-radius: 10px;
 }
 
@@ -53,6 +59,7 @@ html{
 button{
     box-shadow: 0 5px #999;
     cursor: pointer;
+    font-family: calculatorfont;
 }
 
 button:focus{
@@ -62,7 +69,7 @@ button:focus{
 .view, .test, .stop{
     text-decoration:none;
     color: #00a8e2;
-    font-size: .5rem;
+    font-size: .8rem;
     padding: .5% 3%;
     margin-top: 1%;
 }
@@ -74,10 +81,10 @@ button:focus{
 
 .menu{
     position: absolute;
-    top: 34px;
+    top: 45px;
     left: 12px;
     width: 140px;
-    font-size: .5rem;
+    font-size: .75rem;
     background-color: lightgrey;
     padding: 2%;
     border-radius: 5px;
@@ -170,7 +177,7 @@ button:focus{
 
 .extra{
     text-align: left;
-    padding: 1%;
+    padding: 1% 1% 0 1%;
 }
 
 .extra_extend{
@@ -200,10 +207,9 @@ button:focus{
     box-shadow: 0 5px #960c0c;
 }
 
-/* .extraButtons > button:active{
-    box-shadow: 0 3px #670808;
-    transform: translateY(4px);
-} */
+.extraButton:first-child{
+    font-family: 'Courier New', Courier, monospace;
+}
 
 .operators_extend{
     width: 16.66%;
@@ -309,9 +315,9 @@ button:active{
         margin-top: 5vh;
     }
 
-    .main_history, .main_history_extend {
+    .main, main_history, .main_history_extend {
         width: 100%;
-        height: 100%;
+        height: 97%;
         padding: 0;
         margin: 0;
     }
@@ -342,6 +348,17 @@ button:active{
         display: none;
     }
 
+}
+
+@media screen and (max-device-width: 415px) {
+
+    html{
+        font-size: 65px;
+    }
+
+    .main, main_history, .main_history_extend {
+        height: 99%;
+    }
 }
 
 @media screen and (max-device-width: 1024px) and (orientation: landscape) {
