@@ -45,14 +45,22 @@ function Calculator(callback){
             if (!lastElemIsNaN) { //change sign
                 this.specialOperator = true; //we indicate exist a special operator to control when we resolve the equation
                 this.array[this.array.length - 1] = 'sqrt('+this.array[this.array.length - 1]+')';
-                this.cb("special", this.array[this.array.length - 1]);
+                if(this.array[this.array.length - 2]==='('){
+                    this.cb("special", this.array[this.array.length - 2] + this.array[this.array.length - 1]);
+                }else{
+                    this.cb("special", this.array[this.array.length - 1]);
+                }
             }
         }else if(buttonVal === 'log' || buttonVal === 'sin' || buttonVal === 'cos'
             || buttonVal === 'tan' || buttonVal === 'n!') {//special operators
             if (!lastElemIsNaN) {
                 this.specialOperator = true;
                 this.array[this.array.length - 1] = buttonVal + '('+this.array[this.array.length - 1]+')';
-                this.cb("special", this.array[this.array.length - 1]);
+                if(this.array[this.array.length - 2]==='('){
+                    this.cb("special", this.array[this.array.length - 2] + this.array[this.array.length - 1]);
+                }else{
+                    this.cb("special", this.array[this.array.length - 1]);
+                }
             }
         }else if(buttonVal === '.'){// && !lastElemIsNaN) { //decimals
             if(this.countCharactersOnCurrentDisplay(this.array) <= 10){
@@ -63,12 +71,20 @@ function Calculator(callback){
                     this.cb("special", this.array[this.array.length - 1]);
                 }else if(lastElemIsNaN){                                        
                     this.array.push('0.'); //we add the 0
-                    this.cb("special", this.array[this.array.length - 1]);
+                    if(this.array[this.array.length - 2]==='('){
+                        this.cb("special", this.array[this.array.length - 2] + this.array[this.array.length - 1]);
+                    }else{
+                        this.cb("special", this.array[this.array.length - 1]);
+                    }                    
                 }else {//after a number
                     var num_aux = parseInt(this.array[this.array.length - 1]);
                     num_aux += buttonVal; //we go the number and add the dot
                     this.array[this.array.length - 1] = num_aux; //sustitute the old number
-                    this.cb("special", this.array[this.array.length - 1]);
+                    if(this.array[this.array.length - 2]==='('){
+                        this.cb("special", this.array[this.array.length - 2] + this.array[this.array.length - 1]);
+                    }else{
+                        this.cb("special", this.array[this.array.length - 1]);
+                    }
                 }
             }
         }else if(!isNaN(buttonVal) && !lastElemIsNaN){ //2 or more numbers
@@ -80,7 +96,11 @@ function Calculator(callback){
                     this.cb("special", this.array[this.array.length - 1]);
                 }else {
                     this.array[this.array.length - 1] += buttonVal;
-                    this.cb("special", this.array[this.array.length - 1]);
+                    if(this.array[this.array.length - 2]==='('){
+                        this.cb("special", this.array[this.array.length - 2] + this.array[this.array.length - 1]);
+                    }else{
+                        this.cb("special", this.array[this.array.length - 1]);
+                    }
                 }
             }
         }else if(isNaN(buttonVal) && (!lastElemIsNaN || this.specialOperator)){//operator after number
@@ -96,7 +116,7 @@ function Calculator(callback){
             }else{
                 if(this.array[this.array.length-1]===')') { //we only accept close parenthesis
                     this.array.push(buttonVal);
-                    this.cb("addItem", buttonVal);
+                    this.cb("operator", buttonVal);
                 }
             }
         }else if(!isNaN(buttonVal) && lastElemIsNaN){//number after operator or first number
