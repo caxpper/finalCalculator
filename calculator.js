@@ -21,8 +21,9 @@ function Calculator(callback){
         
         var lastElemIsNaN = isNaN(this.array[this.array.length - 1]);
 
-        if (this.array[this.array.length - 1] === error) {
+        if (this.array[this.array.length - 1] === error || this.array[this.array.length - 1] === NaN || this.array[this.array.length - 1] === Infinity) {
             this.deleteItems();
+            return;
         }
         if (buttonVal === '(') { //open parenthesis
             if (lastElemIsNaN && this.array[this.array.length - 1] !== ')') {
@@ -201,11 +202,12 @@ function Calculator(callback){
                 this.completeParenthesis(this.array); //we complete the parenthesis the user didn't close
                 this.executeSpecialOperators(this.array); //before the normal calculation we calculate the special operations
                 num = this.processArray(iteration,this.array); //process the array of elements
-                if(num!== error){
+                if(num!== error && num !== NaN && num !== Infinity && num !== undefined && num !== null){
                     num = parseFloat(num.toFixed(4));
-                    if(num.toString().length > 13){
-                        num = num.toExponential();
-                    }
+                    num.toPrecision(12);
+                    // if(num.toString().length > 13){
+                    //     num = num.toExponential();
+                    // }
                 }
                 this.history.push('=');
                 this.history.push(num);
