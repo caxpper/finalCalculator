@@ -310,6 +310,52 @@ button:active{
     }
 }
 
+@media screen and (max-width: 440px) {
+
+    html{
+        font-size: 8vw;
+    }
+
+    .calculator {
+        width: 90vw;
+        height: 125vw;
+    } 
+}
+
+@media screen and (max-width: 690px) {
+
+    html{
+        font-size: 5vw;
+    }
+
+    .calculator_history {
+        width: 90vw;
+        height: 80vw;
+    } 
+
+    .calculator_extend {
+        width: 90vw;
+        height: 83vw;
+    }
+}
+
+@media screen and (max-width: 930px) {
+    .calculator_history_extend {
+        width: 88vw;
+        height: 56vw;
+    }
+    
+    .previous{
+        padding-top: 1%;
+    }
+
+    .current{
+        padding-bottom: 1%;
+        border-radius: 10px;
+    }
+    
+}
+
 @media screen and (max-device-width: 1024px) {
 
     html{
