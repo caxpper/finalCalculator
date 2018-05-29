@@ -236,7 +236,7 @@ button:focus, .current:focus{
     overflow-y: auto;
     display: inline-block;
     width: 35%;
-    height: 93%;
+    height: 92%;
     margin: 1% 0 2% 0;
     vertical-align: top;
     font-size: .7rem;
@@ -343,6 +343,10 @@ button:active{
     .calculator_history_extend {
         width: 88vw;
         height: 67vw;
+    }
+
+    .main_history_extend {
+        height: 99%;
     }
     
     .previous{
