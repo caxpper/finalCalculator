@@ -342,7 +342,7 @@ button:active{
 @media screen and (max-width: 930px) {
     .calculator_history_extend {
         width: 88vw;
-        height: 56vw;
+        height: 67vw;
     }
     
     .previous{

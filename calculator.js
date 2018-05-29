@@ -120,7 +120,7 @@ function Calculator(callback){
                     this.cb("operator", buttonVal);
                 }
             }
-        }else if(!isNaN(buttonVal) && lastElemIsNaN){//number after operator or first number
+        }else if(!isNaN(buttonVal) && lastElemIsNaN && !this.specialOperator){//number after operator or first number
             this.array.push(buttonVal);
             this.cb("addItem", this.array[this.array.length - 1]);
         }
@@ -444,7 +444,7 @@ function Calculator(callback){
                         array[i] = Math.sqrt(this.getNumber(array[i])).toFixed(6);
                         break;
                     case 'lo':
-                        array[i] = Math.log(this.getNumber(array[i])).toFixed(6);
+                        array[i] = Math.log10(this.getNumber(array[i])).toFixed(6);
                         break;
                     case 'n!':
                         array[i] = this.factorialize(this.getNumber(array[i])).toFixed(6);
